@@ -254,23 +254,23 @@ def login():
         # Account Enumeration Detection:
         # If the username doesn't exist at all, this is enumeration probing
         if email not in DEMO_USERS:
-            honeycloud.send_account_enumeration(
+            res = honeycloud.send_account_enumeration(
                 source_ip=client_ip,
                 username=email,
                 user_agent=user_agent
             )
             logger.warning(f"🔍 Account enumeration probe: '{email}' does not exist")
-
-        # Send failed login telemetry to HoneyCloud
-        # Severity auto-escalates: MEDIUM → HIGH → CRITICAL based on attempt_count
-        res = honeycloud.send_failed_login(
-            source_ip=client_ip,
-            username=email,
-            attempt_count=attempt_count,
-            user_agent=user_agent,
-            referer=request.headers.get("Referer", ""),
-            username_exists=(email in DEMO_USERS)
-        )
+        else:
+            # Send failed login telemetry to HoneyCloud
+            # Severity auto-escalates: MEDIUM → HIGH → CRITICAL based on attempt_count
+            res = honeycloud.send_failed_login(
+                source_ip=client_ip,
+                username=email,
+                attempt_count=attempt_count,
+                user_agent=user_agent,
+                referer=request.headers.get("Referer", ""),
+                username_exists=True
+            )
 
         # --- Deception Routing for Brute Force ---
         # After 5+ failures, check if HoneyCloud recommends deception
