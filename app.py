@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 # Config from environment variables or secure defaults
 import os
 API_KEY = os.environ.get("HONEYCLOUD_API_KEY") or os.environ.get("API_KEY") or "hc_live_fsj-onia9stXSc2HgIuUDqfwR_f5Oe0Q4sTZTMhBku0"
-HONEYCLOUD_URL = os.environ.get("HONEYCLOUD_URL") or os.environ.get("VITE_API_URL") or "http://127.0.0.1:8000"
+HONEYCLOUD_URL = os.environ.get("HONEYCLOUD_URL") or os.environ.get("VITE_API_URL") or "https://honeycloud-backend.onrender.com"
 
 honeycloud = HoneyCloudClient(api_key=API_KEY, base_url=HONEYCLOUD_URL)
 
