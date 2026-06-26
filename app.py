@@ -5,10 +5,15 @@ Professional demo showing how real applications integrate
 with external security / SIEM systems like HoneyCloud.
 """
 
+import sys
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+
 from flask import Flask, render_template, request, jsonify, redirect, url_for, abort, session
 from datetime import datetime
 import logging
 from honeycloud_client import HoneyCloudClient
+
 
 # -----------------------------------------------------------------------------
 # APP SETUP
